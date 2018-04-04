@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.comp.intuitter.model.CreateFollowerRequest;
 import com.comp.intuitter.model.FeedRequest;
+import com.comp.intuitter.model.Login;
 import com.comp.intuitter.service.IEmployeeService;
 import com.comp.intuitter.service.IPostService;
 import com.comp.intuitter.springdata.entity.EmployeeEntity;
@@ -44,8 +45,16 @@ public class IntController {
 		return "Demo is on";
 	}
 	
+	@RequestMapping(value="/login")
+	public EmployeeEntity login(@RequestBody Login login) throws Exception {
+		//use LDAP service to check credentials
+		// return Employee.
+		String id = "id100";//Id received from LDAP
+		return iEmployeeService.getEmployeeById(id);
+	}
+	
 	@RequestMapping(value="/getEmployee/{id}")
-	public EmployeeEntity getEmployee(@PathVariable String id) {
+	public EmployeeEntity getEmployee(@PathVariable String id) throws Exception {
 		
 		return iEmployeeService.getEmployeeById(id);
 	}
@@ -58,7 +67,7 @@ public class IntController {
 	
 	@RequestMapping(value="/createFollower", method = RequestMethod.POST, produces = 
             "application/json" )
-	public void followerStore(@RequestBody CreateFollowerRequest request) {
+	public void followerStore(@RequestBody CreateFollowerRequest request) throws Exception {
 		String friendId =request.getFriendId();
 		String followerId =request.getFollowerId();
 		iEmployeeService.addFollower(friendId, followerId);
@@ -66,13 +75,13 @@ public class IntController {
 	
 	@RequestMapping(value="/getFriends", method = RequestMethod.POST, produces = 
             "application/json" )
-	public Set<EmployeeEntity> getFriends(@RequestParam("followerId") String followerId) {
+	public Set<EmployeeEntity> getFriends(@RequestParam("followerId") String followerId) throws Exception {
 		 return iEmployeeService.getFriends(followerId);
 	}
 	
 	@RequestMapping(value="/getFollowers", method = RequestMethod.POST, produces = 
             "application/json")
-	public Set<EmployeeEntity> getFollowers(@RequestParam("friendId") String friendId) {
+	public Set<EmployeeEntity> getFollowers(@RequestParam("friendId") String friendId) throws Exception {
 		 return iEmployeeService.getFollowers(friendId);
 	}
 	
@@ -85,7 +94,7 @@ public class IntController {
 	
 	@RequestMapping(value="/getPosts", method = RequestMethod.POST, produces = 
             "application/json")
-	public Set<PostEntity> getPosts(@RequestParam("userId") String userId) {
+	public Set<PostEntity> getPosts(@RequestParam("userId") String userId) throws Exception {
 		 return iEmployeeService.getPostMessages(userId);
 	}
 	

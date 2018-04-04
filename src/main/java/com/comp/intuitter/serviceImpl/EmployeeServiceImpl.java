@@ -28,38 +28,58 @@ public class EmployeeServiceImpl implements IEmployeeService{
 	}
 
 	@Override
-	public EmployeeEntity getEmployeeById(String employeeId) {
+	public EmployeeEntity getEmployeeById(String employeeId) throws Exception {
 		// TODO Auto-generated method stub
-		return iEmployeeEntityRepository.findOne(employeeId);
+		EmployeeEntity employee= iEmployeeEntityRepository.findOne(employeeId);
+		if(employee==null) {
+			throw new Exception("Employee not found");
+		}
+		return employee;
 	}
 
 	@Override
-	public void addFollower(String friendId, String followerId) {
+	public void addFollower(String friendId, String followerId) throws Exception {
 		
 		EmployeeEntity friend = iEmployeeEntityRepository.findOne(friendId);
 		EmployeeEntity follower = iEmployeeEntityRepository.findOne(followerId);
 		System.out.println("friendId" + friendId);
 		System.out.println("followerId" + followerId);
+		if(friend==null) {
+			throw new Exception("Employee not found");
+		}
+		if(follower==null) {
+			throw new Exception("Employee not found");
+		}
+		
 		
 		friend.getFollowers().add(follower);
 		iEmployeeEntityRepository.save(friend);
 	}
 
 	@Override
-	public Set<EmployeeEntity> getFollowers(String friendId) {
+	public Set<EmployeeEntity> getFollowers(String friendId) throws Exception {
 		EmployeeEntity friend = iEmployeeEntityRepository.findOne(friendId);
+		if(friend==null) {
+			throw new Exception("Employee not found");
+		}
 		return friend.getFollowers();
 	}
 
 	@Override
-	public Set<EmployeeEntity> getFriends(String followerId) {
+	public Set<EmployeeEntity> getFriends(String followerId) throws Exception {
 		EmployeeEntity follower = iEmployeeEntityRepository.findOne(followerId);
+		if(follower==null) {
+			throw new Exception("Employee not found");
+		}
 		return follower.getFriends();
 	}
 
 	@Override
-	public Set<PostEntity> getPostMessages(String userId) {
+	public Set<PostEntity> getPostMessages(String userId) throws Exception {
 		EmployeeEntity employee = iEmployeeEntityRepository.findOne(userId);
+		if(employee==null) {
+			throw new Exception("Employee not found");
+		}
 		
 		return employee.getPostMessages();
 	}

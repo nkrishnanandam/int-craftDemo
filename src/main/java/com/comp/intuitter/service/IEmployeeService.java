@@ -10,15 +10,15 @@ public interface IEmployeeService {
 	
 	public String createEmployee(EmployeeEntity employee);
 	
-	public EmployeeEntity getEmployeeById(String employeeId);
+	public EmployeeEntity getEmployeeById(String employeeId) throws Exception;
 	
-	public void addFollower(String friendId, String followerId);
+	public void addFollower(String friendId, String followerId) throws Exception;
 	
-	public Set<EmployeeEntity> getFollowers(String friendId);
+	public Set<EmployeeEntity> getFollowers(String friendId) throws Exception;
 	
-	public Set<EmployeeEntity> getFriends(String followerId);
+	public Set<EmployeeEntity> getFriends(String followerId) throws Exception;
 	
-	public Set<PostEntity> getPostMessages(String userId);
+	public Set<PostEntity> getPostMessages(String userId) throws Exception;
 	
 	
 
